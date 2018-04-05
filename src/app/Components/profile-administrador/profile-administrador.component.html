@@ -1,0 +1,449 @@
+<div  *ngIf="admin.rol == 2" > 
+  <!-- Search Bar -->
+  <div class="search-bar">
+      <div class="search-icon">
+          <i class="material-icons">search</i>
+      </div>
+      <input type="text" placeholder="START TYPING...">
+      <div class="close-search">
+          <i class="material-icons">close</i>
+      </div>
+  </div>
+  <!-- #END# Search Bar -->
+  
+<!-- Top Bar -->
+<nav class="navbar">
+    <div class="container-fluid bg-deep-orange">
+        <div class="navbar-header">
+            <a class="navbar-brand" style="cursor:pointer" onclick="openNav()">&#9776; MATI ASSEMBLER - ADMINISTRADOR</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- Call Search -->
+                <li>
+                    <a href="javascript:void(0);" class="js-search" data-close="true">
+                        <i class="material-icons">search</i>
+                    </a>
+                </li>
+                <!-- #END# Call Search -->
+
+                <li class="pull-right">
+                    <a href="javascript:void(0);" class="js-right-sidebar" data-close="true">
+                        <i class="material-icons">more_vert</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- #Top Bar -->
+<section>
+        <!-- Left Sidebar -->
+        <aside id="leftsidebar" class="sidebar">
+            <!-- User Info -->
+            <div class="user-info bg-light-green">
+                <div class="info-container">
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{admin.nombre}}</div>
+                    <div class="email">{{admin.correo}}</div>
+                </div>
+                <div><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></div>                
+            </div>
+            <!-- #User Info -->
+            <!-- Menu -->
+            <div class="menu">
+                <ul class="list">
+                    <li class="header active">MENU PRINCIPAL</li>
+                    <li>
+                        <a (click)="setVista(1)">
+                            <i class="material-icons">person</i>
+                            <span style="cursor:pointer">Usuarios</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a (click)="setVista(2)">
+                            <i class="material-icons">settings</i>
+                            <span style="cursor:pointer">Repuestos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a  (click)="logout()" >
+                            <i class="material-icons">not_interested</i>
+                            <span style="cursor:pointer">Cerrar sesión</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- #Menu -->
+            <!-- Footer -->
+            <div class="legal">
+                <div class="copyright">
+                    &copy; 2018
+                    <a href="javascript:void(0);">MatiAssembler</a>.
+                </div>
+                <div class="version">
+                    <b>Version: </b> 1.0.0
+                </div>
+            </div>
+            <!-- #Footer -->
+        </aside>
+        <!-- #END# Left Sidebar -->
+ </section>
+
+  <section id="main" class="content">
+    
+
+          <div *ngIf="mostrarAlerta">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button (click)="cerrarAlerta()" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>{{mensajeAlerta}}</strong>
+            </div>
+          </div>
+          <div *ngIf="mostrarAlerta2">
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button (click)="cerrarAlerta2()" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>{{mensajeAlerta}}</strong>
+            </div>
+          </div>
+          <div *ngIf="mostrarAlerta3">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button (click)="cerrarAlerta3()" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>{{mensajeAlerta}}</strong>
+            </div>
+          </div>
+   <div class="container-fluid">
+    <!-- LISTA USUARIOS -->
+    <div  *ngIf="vista == 1">
+      <div class="row clearfix">
+          <div>
+              <div class="card">
+                  <div class="header bg-pink">
+                      <h2>
+                          LISTA DE USUARIOS
+                      </h2>
+                  </div>
+                  <div class="body table-responsive" >
+                      <table class="table table-hover dashboard-task-infos">
+                          <thead>
+                              <tr>
+                                  <th>NOMBRE</th>
+                                  <th>APELLIDO</th>
+                                  <th>CÉDULA</th>
+                                  <th>ROL</th>
+                                  <th>MODIFICAR</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor= 'let user of usuarios' >
+                                  <td>{{user.nombre}}</td>
+                                  <td>{{user.apellido}}</td>
+                                  <td>{{user.cedula}}</td>
+                                  <td>{{obtenerRol(user.rol)}}</td>
+                                  <td>
+                                  <button type="button" (click)="modificarUsuario(user.idUsuario)" class="btn btn-default waves-effect">
+                                    <i class="material-icons">settings</i>
+                                </button>
+                            </td>
+                              </tr>
+                             
+                          </tbody>
+                      </table>
+                  </div>
+                  <div class="align-center">
+                      <button type="button" (click)="setVista(4)" class="btn bg-cyan waves-effect">AGREGAR USUARIO</button>
+                  </div>
+                  <br>
+
+              </div>
+          </div>
+      </div>
+    </div>
+    <!-- #END# LISTA USUARIOS -->
+    <!-- LISTA REPUESTOS -->
+    <div  *ngIf="vista == 2">
+      <div class="row clearfix">
+          <div>
+              <div class="card">
+                  <div class="header bg-deep-purple">
+                      <h2>
+                          LISTA DE REPUESTOS
+                      </h2>
+                  </div>
+                  <div class="body table-responsive">
+                      <table class="table table-hover">
+                          <thead>
+                              <tr>
+                                  <th>NOMBRE</th>
+                                  <th>MARCA</th>
+                                  <th>MODELO</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor = "let repuesto of repuestos" >
+                                  <td>{{repuesto.pieza}}</td>
+                                  <td>{{setMarcaVista(repuesto.marca)}} </td>
+                                  <td>{{setModeloVista(repuesto.modelo)}} </td>
+                              </tr>
+                              
+                          </tbody>
+                      </table>
+                  </div>
+                  <div class="align-center">
+                          <button type="button" class="btn bg-cyan waves-effect" (click) ="setVista(5)" >AGREGAR REPUESTO</button>
+                      </div>
+                      <br>
+              </div>
+          </div>
+      </div>
+    </div>
+    <!-- #END# LISTA VEHICULOS -->
+    <!-- MODIFICAR USUARIOS -->
+    <div  *ngIf="vista == 3">
+      <div class="overlay"></div>
+      <div class="signup-box">
+          <div class="logo">
+              <a href="javascript:void(0);">Mati<b>ASSEMBLER</b></a>
+              <small>Su taller de siempre, ahora mejor que nunca</small>
+          </div>
+          <div class="card">
+              <div class="body">
+                  <form  action="/" (submit)="modificarUsuarioSubmit()" id="frmFileUpload2"  method="post">
+                      <div class="msg">Modifique el usuario</div>
+                      <div class="input-group">
+                          <span class="input-group-addon">
+                                      <i class="material-icons">person</i>
+                                  </span>
+                          <div class="form-line">
+                              <input type="text" class="form-control" [(ngModel)]="name" name="name" placeholder="Nombre" required autofocus>
+                          </div>
+                      </div>
+                      <div class="input-group">
+                          <span class="input-group-addon">
+                                      <i class="material-icons">person</i>
+                                  </span>
+                          <div class="form-line">
+                              <input type="text" class="form-control" [(ngModel)]="lastname" name="lastname" placeholder="Apellido" required autofocus>
+                          </div>
+                      </div>
+                      <div class="input-group">
+                          <span class="input-group-addon">
+                                      <i class="material-icons">person</i>
+                                  </span>
+                          <div class="form-line">
+                              <input type="text" class="form-control" [(ngModel)]="cedula" name="cedula" placeholder="Cédula" required autofocus>
+                          </div>
+                      </div>
+
+
+                      <div class="input-group">
+                          <span class="input-group-addon">
+                                      <i class="material-icons">email</i>
+                                  </span>
+                          <div class="form-line">
+                              <input type="email" class="form-control" [(ngModel)]="email" name="email" placeholder="Email" required>
+                          </div>
+                      </div> 
+                      <div class="input-group">
+                          <span class="input-group-addon">
+                                      <i class="material-icons">person</i>
+                                  </span>
+                          <div class="btn-group">
+
+                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{obtenerRolSubmit()}}<span class="caret"></span>
+                                    </button>
+                              <ul class="dropdown-menu">
+                                  <li><a (click)= "setRol(1)" >Cliente</a></li>
+                                  <li><a (click)= "setRol(2)" >Administrador</a></li>
+                                  <li><a (click)= "setRol(3)">Gerente</a></li>
+                                  <li><a (click)= "setRol(4)">Mecanico</a></li>
+
+                              </ul>
+                          </div>
+                      </div>
+                      <div class="input-group">
+                          <span class="input-group-addon">
+                                  <i class="material-icons">person</i>
+                              </span>
+                          <div class="form-line">
+                              <input type="text" class="form-control" [(ngModel)]="telefono" name="telefono" placeholder="telefono" required autofocus>
+                          </div>
+                      </div>
+                      <div class="input-group">
+                          <span class="input-group-addon">
+                                  <i class="material-icons">person</i>
+                              </span>
+                          <div class="form-line">
+                              <input type="text" class="form-control" [(ngModel)]="direccion" name="direccion" placeholder="direccion" required autofocus>
+                          </div>
+                          <button class="btn btn-block btn-lg bg-pink waves-effect"  type="submit">MODIFICAR</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <!-- AGREGAR USUARIOS -->
+    <div  *ngIf="vista == 4">
+        <div class="signup-box">
+          <div class="logo">
+            <a href="javascript:void(0);">Mati<b>ASSEMBLER</b></a>
+            <small>Su taller de siempre, ahora mejor que nunca</small>
+          </div>
+        </div>
+        <div class="card">
+            <div class="body">
+                <form action="/" (submit) = "onRegisterSubmit()" id="frmFileUpload"  method="post">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">person</i>
+                        </span>
+                        <div class="form-line">
+                            <input id="myInput4" type="text" class="form-control" [(ngModel)]="name" name="name" placeholder="Nombre" required autofocus>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">person</i>
+                        </span>
+                        <div class="form-line">
+                            <input id="myInput5" type="text" class="form-control"  [(ngModel)]="lastname" name="lastname" placeholder="Apellido" required autofocus>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">person</i>
+                        </span>
+                        <div class="form-line">
+                            <input id="myInput6" type="text" class="form-control"  [(ngModel)] = "cedula" name="cedula" placeholder="Cédula" required autofocus>
+                        </div>
+                    </div>  
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">email</i>
+                        </span>
+                        <div class="form-line">
+                            <input id="myInput7" type="email" class="form-control" [(ngModel)]="email" name="email" placeholder="Email" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">lock</i>
+                        </span>
+                        <div class="form-line">
+                            <input id="myInput8" type="password" class="form-control" [(ngModel)] = "password" name="password" minlength="6" placeholder="Contraseña" required>
+                        </div>
+                    </div>
+                  <div class="input-group">
+                      <span class="input-group-addon">
+                                  <i class="material-icons">person</i>
+                      </span>
+                      <div class="btn-group">
+
+                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{obtenerRolSubmit()}}<span class="caret"></span>
+                                </button>
+                          <ul class="dropdown-menu">
+                              <li><a (click)= "setRol(1)" >Cliente</a></li>
+                              <li><a (click)= "setRol(2)" >Administrador</a></li>
+                              <li><a (click)= "setRol(3)">Gerente</a></li>
+                              <li><a (click)= "setRol(4)">Mecánico</a></li>
+                          </ul>
+                      </div>
+                  </div>
+                  <div class="input-group">
+                      <span class="input-group-addon">
+                          <i class="material-icons">person</i>
+                      </span>
+                      <div class="form-line">
+                          <input id="myInput9" type="text" class="form-control" [(ngModel)]="telefono" name="telefono" placeholder="Telefono" required autofocus>
+                      </div>
+                  </div>
+                  <div class="input-group">
+                      <span class="input-group-addon">
+                          <i class="material-icons">person</i>
+                      </span>
+                      <div class="form-line">
+                          <input id="myInput10" type="text" class="form-control" [(ngModel)]="direccion" name="direccion" placeholder="Direccion" required autofocus>
+                      </div>
+                  </div>
+
+                    <button class="btn btn-block btn-lg bg-pink waves-effect" type="submit">REGISTRAR</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- AGREGAR REPUESTO -->
+    <div  *ngIf="vista == 5">     
+      <div class="card">
+          <div class="header">
+              <h2>REGISTRAR NUEVO REPUESTO</h2>
+          </div> 
+          <div class="body">
+              <form  action="/" (submit)="registrarRepuesto()" id="frmFileUpload" method="post">
+                  <div class="input-group">
+                      <span class="input-group-addon">
+                          <i class="material-icons">confirmation_number</i>
+                      </span>
+                      <div class="form-line">
+                          <input id="myInput" type="text" class="form-control" [(ngModel)]="pieza" name="pieza" placeholder="Nombre de pieza">
+                      </div>
+                  </div>
+                <div  *ngIf="selecciono">
+                  <div class="input-group">
+                        <span class="input-group-addon">
+                                <i class="material-icons">confirmation_number</i>
+                            </span>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Marca: {{marcaNuevo.marca}} <span class="caret"></span>
+                        </button>
+                        <ul   class="dropdown-menu">
+                            <li *ngFor = "let marca of marcas"><a (click)= "setMarcaNuevo(marca)">{{marca.marca}}</a></li>
+                            
+                        </ul>
+                    </div>
+                  </div>
+                </div>
+                <div  *ngIf="!selecciono">
+                  <div class="input-group">
+                        <span class="input-group-addon">
+                                <i class="material-icons">confirmation_number</i>
+                            </span>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Marca: (opcional)<span class="caret"></span>
+                        </button>
+                        <ul   class="dropdown-menu">
+                            <li *ngFor = "let marca of marcas"><a (click)= "setMarcaNuevo(marca)">{{marca.marca}}</a></li>
+                            
+                        </ul>
+                    </div>
+                  </div>
+                </div>
+                  <div class="input-group">
+                      <span class="input-group-addon">
+                          <i class="material-icons">directions_car</i>
+                      </span>
+                      <div class="form-line">
+                          <input id="myInput3" type="text" class="form-control"  [(ngModel)]="modelo" name="modelo" placeholder="Modelo (opcional)" >
+                      </div>
+                  </div>
+                  <button class="btn btn-block btn-lg bg-pink waves-effect" type="submit">AÑADIR REPUESTO</button>
+    
+              </form>
+          </div>
+    </div>
+  </div>
+
+
+  </div>               
+</section>
+
+</div>
+<div *ngIf="admin.rol != 2"> 
+    <body class="five-zero-zero">
+        <div class="five-zero-zero-container">
+            <div class="error-code">Error</div>
+            <div class="error-message">No tiene acceso a esta página</div>
+        </div>
+    </body> 
+</div>

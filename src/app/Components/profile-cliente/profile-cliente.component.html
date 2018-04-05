@@ -1,0 +1,362 @@
+
+<div *ngIf="user.rol == 1"> 
+
+<!-- Search Bar -->
+<div class="search-bar">
+  <div class="search-icon">
+      <i class="material-icons">search</i>
+  </div>
+  <input type="text" placeholder="START TYPING...">
+  <div class="close-search">
+      <i class="material-icons">close</i>
+  </div>
+</div>
+<!-- #END# Search Bar -->
+
+
+<!-- Top Bar -->
+<nav class="navbar">
+    <div class="container-fluid bg-deep-orange">
+        <div class="navbar-header">
+            <a class="navbar-brand" style="cursor:pointer" onclick="openNav()">&#9776; MATI ASSEMBLER - CLIENTE</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- Call Search -->
+                <li>
+                    <a href="javascript:void(0);" class="js-search" data-close="true">
+                        <i class="material-icons">search</i>
+                    </a>
+                </li>
+                <!-- #END# Call Search -->
+
+                <li class="pull-right">
+                    <a href="javascript:void(0);" class="js-right-sidebar" data-close="true">
+                        <i class="material-icons">more_vert</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- #Top Bar -->
+<section>
+        <!-- Left Sidebar -->
+        <aside id="leftsidebar" class="sidebar">
+            <!-- User Info -->
+            <div class="user-info bg-light-green">
+                <div class="info-container">
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{user.nombre}}</div>
+                    <div class="email">{{user.correo}}</div>
+                </div>
+                <div><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></div>
+            </div>
+            <!-- #User Info -->
+            <!-- Menu -->
+            <div class="menu">
+                <ul class="list">
+                    <li class="header active">MENU PRINCIPAL</li>
+                    <li>
+                        <a (click)="setVista(1)">
+                            <i class="material-icons">home</i>
+                            <span style="cursor:pointer">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a (click)="setVista(2)">
+                            <i class="material-icons">directions_car</i>
+                            <span style="cursor:pointer">Registrar vehículo</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a  (click)="logout()" >
+                            <i class="material-icons">not_interested</i>
+                            <span style="cursor:pointer">Cerrar sesión</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- #Menu -->
+            <!-- Footer -->
+            <div class="legal">
+                <div class="copyright">
+                    &copy; 2018
+                    <a href="javascript:void(0);">MatiAssembler</a>.
+                </div>
+                <div class="version">
+                    <b>Version: </b> 1.0.0
+                </div>
+            </div>
+            <!-- #Footer -->
+        </aside>
+        <!-- #END# Left Sidebar -->
+ </section>
+
+<section id="main" class="content">
+
+  <div class="container-fluid">
+            <div *ngIf="mostrarAlerta3">
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button (click)="cerrarAlerta3()" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>{{mensajeAlerta}}</strong>
+                </div>
+            </div>
+<div  *ngIf="vista == 1">
+      <div class="block-header">
+          <h2>USUARIO</h2>
+      </div>
+
+      <!-- DATOS -->
+      <div class="row clearfix">
+
+          <div class="col-xs-12 col-sm-6">
+              <div class="info-box bg-pink hover-expand-effect">
+                  <div class="icon">
+                      <i class="material-icons">person</i>
+                  </div>
+                  <div class="content">
+                      <div class="text">NOMBRE</div>
+                      <p class="lead">{{user.nombre}}</p>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-6">
+              <div class="info-box bg-purple hover-expand-effect">
+                  <div class="icon">
+                      <i class="material-icons">person</i>
+                  </div>
+                  <div class="content">
+                      <div class="text">APELLIDO</div>
+                      <p class="lead">{{user.apellido}}</p>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-6">
+              <div class="info-box bg-indigo hover-expand-effect">
+                  <div class="icon">
+                      <i class="material-icons">confirmation_number</i>
+                  </div>
+                  <div class="content">
+                      <div class="text">CÉDULA</div>
+                      <div class="lead"> {{user.cedula}} </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-6">            
+              <div class="info-box bg-cyan hover-expand-effect">
+                  <div class="icon">
+                      <i class="material-icons">email</i>
+                  </div>
+                  <div class="content">
+                      <div class="text">CORREO ELECTRÓNICO</div>
+                      <p class="lead">{{user.correo}}</p>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-6">
+              <div class="info-box bg-light-green hover-expand-effect">
+                  <div class="icon">
+                      <i class="material-icons">local_phone</i>
+                  </div>
+                  <div class="content">
+                      <div class="text">TELEFÓNO</div>
+                      <div class="lead">{{user.telefono}}</div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-6">
+              <div class="info-box bg-orange hover-expand-effect">
+                  <div class="icon">
+                      <i class="material-icons">directions</i>
+                  </div>
+                  <div class="content">
+                      <div class="text">DIRECCIÓN</div>
+                      <p class="lead">{{user.direccion}}</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+          <!-- #END# DATOS -->
+
+      <div class="row clearfix">
+          <!-- VEHICULOS -->
+          <div >
+    <!--ALERTAS-->              
+    <div *ngIf="mostrarAlerta">
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button (click)="cerrarAlerta()" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>{{mensajeAlerta}}</strong>
+        </div>
+    </div>
+    <div *ngIf="mostrarAlerta2">
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <button (click)="cerrarAlerta2()" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>{{mensajeAlerta}}</strong>
+        </div>
+    </div>
+    <!--FIN ALERTAS-->             
+              <div class="card">
+                  <div class="header">
+                      <h2>VEHÍCULOS REGISTRADOS</h2>
+                  </div>
+                  <div class="body">
+                      <div class="table-responsive">
+                          <table class="table table-hover dashboard-task-infos">
+                              <thead>
+                                  <tr>
+                                      <th>Marca</th>
+                                      <th>Modelo</th>
+                                      <th>Año</th>
+                                      <th>Placa</th>
+                                      <th>Serial del motor</th>
+                                      <th>Estado</th>
+                                      <th>Fecha Registro</th>
+                                      <th>Solicitar Cita</th>
+                                      <th>Desactivar</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  
+                                  <tr *ngFor="let vehiculo of vehiculos" >
+                                       
+                                      <td>{{setMarcaVista(vehiculo.marca)}}</td>
+                                      <td>{{vehiculo.modelo}}</td>
+                                      <td>{{vehiculo.ano}}</td>
+                                      <td>{{vehiculo.placa}}</td>
+                                      <td>{{vehiculo.serialMotor}}</td>
+                                      <td>{{setActivado(vehiculo.activado)}}</td>
+                                      <td>{{vehiculo.fechaRegistro}}</td>
+                                      <td>
+                                          <button (click)="solicitarCita(vehiculo.idVehiculo)" type="button" class="btn bg-indigo waves-effect">
+                                              <i class="material-icons">date_range</i>
+                                          </button>
+                                      </td>
+                                      <td>
+                                          <button type="button" class="btn bg-indigo waves-effect" (click)="desactivarVehiculo(vehiculo)">
+                                              <i class="material-icons">close</i>
+                                          </button>
+                                      </td>                                      
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+
+              </div>
+          </div>
+          <!-- #END# VEHICULOS -->
+      </div>
+  </div>
+
+
+<div  *ngIf="vista == 2">
+  <div class="row clearfix">
+    <div>
+      <div class="card">
+          <div class="header">
+              <h2>REGISTRAR NUEVO VEHICULO</h2>
+          </div>
+          <div class="body">
+              <form action="/" (submit)="vehiculoSubmit()" id="frmFileUpload"  method="post" enctype="multipart/form-data">
+                <div *ngIf="selecciono">
+                  <div class="input-group">
+                        <span class="input-group-addon">
+                                <i class="material-icons">confirmation_number</i>
+                            </span>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Marca: {{marcaNuevo.marca}} <span class="caret"></span>
+                        </button>
+                        <ul   class="dropdown-menu">
+                            <li *ngFor = "let marca of marcas"><a (click)= "setMarcaNuevo(marca)">{{marca.marca}}</a></li>
+                            
+                        </ul>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!selecciono">
+                  <div class="input-group">
+                        <span class="input-group-addon">
+                                <i class="material-icons">confirmation_number</i>
+                            </span>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Marca: <span class="caret"></span>
+                        </button>
+                        <ul   class="dropdown-menu">
+                            <li *ngFor = "let marca of marcas"><a (click)= "setMarcaNuevo(marca)">{{marca.marca}}</a></li>
+                            
+                        </ul>
+                    </div>
+                  </div>
+                </div>
+                  <div class="input-group">
+                      <span class="input-group-addon">
+                          <i class="material-icons">directions_car</i>
+                      </span>
+                      <div class="form-line">
+                          <input id="myInput" type="email" class="form-control"[(ngModel)]="modelo" name="modelo" placeholder="Modelo" required>
+                      </div>
+                  </div>
+
+                  <div class="input-group">
+                      <span class="input-group-addon">
+                          <i class="material-icons">confirmation_number</i>
+                      </span>
+                      <div class="form-line">
+                          <input id="myInput2" type="text" class="form-control" name="ano" [(ngModel)]="ano"  placeholder="Año" required>
+                      </div>
+                  </div>
+
+                  <div class="input-group">
+                      <span class="input-group-addon">
+                          <i class="material-icons">confirmation_number</i>
+                      </span>
+                      <div class="form-line">
+                          <input id="myInput3" type="text" class="form-control" name="confirm" [(ngModel)]="serialMotor" placeholder="serialMotor" required>
+                      </div>
+                  </div>
+
+                  <div class="input-group">
+                      <span class="input-group-addon">
+                          <i class="material-icons">confirmation_number</i>
+                      </span>
+                      <div class="form-line">
+                          <input id="myInput4" type="text" class="form-control" [(ngModel)]="placa" name="placa" placeholder="Placa" required autofocus>
+                      </div>
+                  </div>
+                   <div class="input-group">
+                      <span class="input-group-addon">
+                          <i class="material-icons">confirmation_number</i>
+                      </span>
+                      <div class="form-line">                      
+                        <label for="fileItem">Elegir imagen a cargar</label>
+                        <input type="file" id="fileItem" [(ngModel)]="file" name="file" accept=".png, .jpg, .jpeg" multiple>
+                      </div>
+                  </div>                 
+                  <button class="btn btn-block btn-lg bg-pink waves-effect" type="submit">REGISTRAR VEHÍCULO</button>
+
+              </form>
+          </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+</div>
+</section>
+
+</div>
+<div *ngIf="user.rol != 1"> 
+    <body class="five-zero-zero">
+        <div class="five-zero-zero-container">
+            <div class="error-code">Error</div>
+            <div class="error-message">No tiene acceso a esta página</div>
+        </div>
+    </body> 
+</div>

@@ -1,0 +1,560 @@
+<div *ngIf="user.rol == 3"> 
+<!-- Top Bar -->
+<nav class="navbar">
+    <div class="container-fluid bg-deep-orange">
+        <div class="navbar-header">
+            <a class="navbar-brand" style="cursor:pointer" onclick="openNav()">&#9776; MATI ASSEMBLER - GERENTE</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- Call Search -->
+                <li>
+                    <a href="javascript:void(0);" class="js-search" data-close="true">
+                        <i class="material-icons">search</i>
+                    </a>
+                </li>
+                <!-- #END# Call Search -->
+
+                <li class="pull-right">
+                    <a href="javascript:void(0);" class="js-right-sidebar" data-close="true">
+                        <i class="material-icons">more_vert</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- #Top Bar -->
+    <section>
+        <!-- Left Sidebar -->
+        <aside id="leftsidebar" class="sidebar">
+            <!-- User Info -->
+            <div class="user-info">
+                <div class="info-container">
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{user.nombre}}</div>
+                    <div class="email">{{user.correo}}</div>
+                </div>
+                <div><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></div>
+            </div>
+            <!-- #User Info -->
+            <!-- Menu -->
+            <div class="menu">
+                <ul class="list">
+                    <li class="header active">MENU PRINCIPAL</li>
+                    <li>
+                        <a (click)="setVista(1)">
+                            <i class="material-icons">person</i>
+                            <span style="cursor:pointer">Ver mecanicos y clientes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a (click)="setVista(2)">
+                            <i class="material-icons">directions_car</i>
+                            <span style="cursor:pointer">Ver vehículos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a (click)="setVista(3)">
+                            <i class="material-icons">event_available</i>
+                            <span style="cursor:pointer">Citas y órdenes</span>
+                        </a>
+                    </li> 
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="material-icons">assignment</i>
+                            <span>Reportes</span>
+                         <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a (click)= "setVista(4)">Cliente</a></li>
+                          <li><a (click)="setVista(5)">Vehículo</a></li>
+                          <li><a (click)="setVista(6)">Mecánico</a></li>
+                          <li><a (click)="setVista(7)">Modelo de vehículo</a></li>
+                        </ul>
+                    </li> 
+                    <li>
+                        <a (click)="setVista(10)">
+                            <i class="material-icons">camera</i>
+                            <span style="cursor:pointer">Escanear QR</span>
+                        </a>
+                    </li>                 
+                    <li>
+                        <a (click)="logout()" >
+                            <i class="material-icons">not_interested</i>
+                            <span style="cursor:pointer">Cerrar sesión</span>
+                        </a>
+                    </li>
+
+ 
+                </ul>
+            </div>
+            <!-- #Menu -->
+            <!-- Footer -->
+            <div class="legal">
+                <div class="copyright">
+                    &copy; 2018
+                    <a href="javascript:void(0);">MatiAssembler</a>.
+                </div>
+                <div class="version">
+                    <b>Version: </b> 1.0.0
+                </div>
+            </div>
+            <!-- #Footer -->
+        </aside>
+        <!-- #END# Left Sidebar -->
+
+    </section>
+
+<section id="main" class="content">
+
+          <div *ngIf="mostrarAlerta">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button (click)="cerrarAlerta()" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>{{mensajeAlerta}}</strong>
+            </div>
+          </div>
+          <div *ngIf="mostrarAlerta2">
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button (click)="cerrarAlerta2()" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>{{mensajeAlerta}}</strong>
+            </div>
+          </div>
+          <div *ngIf="mostrarAlerta3">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button (click)="cerrarAlerta3()" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>{{mensajeAlerta}}</strong>
+            </div>
+          </div>
+    <div class="container-fluid">
+            <div  *ngIf="vista == 1">
+            <!-- LISTA CLIENTES -->
+            <div class="row clearfix">
+                    <div>
+                        <div class="card">
+                            <div class="header bg-pink">
+                                <h2>
+                                    LISTA DE CLIENTES
+                                </h2>
+                            </div>
+                            <div class="body table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                          <th>NOMBRE</th>
+                                          <th>APELLIDO</th>
+                                          <th>CÉDULA</th>
+                                          <th>MODIFICAR</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor= 'let user of clientes' >
+                                          <td>{{user.nombre}}</td>
+                                          <td>{{user.apellido}}</td>
+                                          <td>{{user.cedula}}</td>
+                                          <td> 
+                                            <button type="button" (click)="modificarCliente(user.idUsuario)" class="btn btn-default waves-effect">
+                                                <i class="material-icons">settings</i>
+                                            </button>
+                                          </td>
+                                         </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                
+                <!-- #END# LISTA CLIENTES -->
+
+
+                <!-- LISTA MECANICOS -->
+                    <div>
+                        <div class="card">
+                            <div class="header bg-pink">
+                                <h2>
+                                    LISTA DE MECÁNICOS
+                                </h2>
+                            </div>
+                            <div class="body table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>NOMBRE</th>
+                                            <th>APELLIDO</th>
+                                            <th>CÉDULA</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor= 'let user of mecanicos' >
+                                          <td>{{user.nombre}}</td>
+                                          <td>{{user.apellido}}</td>
+                                          <td>{{user.cedula}}</td>
+                                         </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                
+                <!-- #END# LISTA MECANICOS -->
+            </div>
+        </div>
+
+
+        <div *ngIf="vista == 2">
+        <!-- LISTA VEHICULOS -->
+            <div class="row clearfix">
+                    <div class="card">
+                        <div class="header bg-cyan">
+                            <h2>
+                                LISTA DE VEHICULOS
+                            </h2>
+                        </div>
+                        <div class="body table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>MARCA</th>
+                                        <th>MODELO</th>
+                                        <th>AÑO</th>
+                                        <th>PLACA</th>
+                                        <th>SERIAL</th>
+                                        <th>Dueño</th>
+                                        <th>FECHA REGISTRO</th>
+                                        <th>Ver</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let vehiculo of vehiculos" >
+                                       
+                                      <td>{{setMarcaVista(vehiculo.marca)}}</td>
+                                      <td>{{vehiculo.modelo}}</td>
+                                      <td>{{vehiculo.ano}}</td>
+                                      <td>{{vehiculo.placa}}</td>
+                                      <td>{{vehiculo.serialMotor}}</td>
+                                      <td>{{vehiculo.propietario}}</td>
+                                      <td>{{vehiculo.fechaRegistro}}</td> 
+                                      <td> <button type="button" (click)="verDetalle(vehiculo.idVehiculo)" class="btn btn-default waves-effect">
+                                            <i class="material-icons">pageview</i>
+                                        </button></td>          
+                                    </tr>
+                               
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    <!-- #END# LISTA VEHICULOS -->
+
+        <div *ngIf="vista == 3">
+            <!-- COLA DE ESPERA -->
+        <div class="row clearfix">
+                <div >
+                    <div class="card">
+                        <div class="header bg-light-green">
+                            <h2>
+                                    COLA DE ESPERA
+                            </h2>
+                        </div>
+                        <div class="body table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                            <th>MODELO</th>
+                                            <th>AÑO</th>
+                                            <th>PLACA</th>
+                                            <th>SERIAL</th>
+                                            <th>FECHA SOLICITUD</th>
+                                            <th>ASIGNAR FECHA</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let carro of carrosCitas">
+                                        <td>{{carro.modelo}}</td>
+                                        <td>{{carro.ano}}</td>
+                                        <td>{{carro.placa}}</td>
+                                        <td>{{carro.serialMotor}}</td>
+                                        <td> {{carro.fecha}}</td>
+                                        <td><button type="button" class="btn bg-cyan waves-effect"
+                                            (click) ="agregarOrden(carro.idVehiculo, carro.idCita)">ASIGNAR FECHA</button></td>
+                                    </tr>
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            
+
+            <!-- #END# Hover Rows -->
+
+             <!-- ÓRDENES EN REPARACIÓN -->
+
+                <div >
+                    <div class="card">
+                        <div class="header bg-orange">
+                            <h2>
+                                    ÓRDENES EN REPARACIÓN
+                            </h2>
+                        </div>
+                        <div class="body table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                            <th>ORDEN</th>
+                                            <th>MODELO</th>
+                                            <th>AÑO</th>
+                                            <th>PLACA</th>
+                                            <th>SERIAL</th>
+                                            <th>ESTADO</th>
+                                            <th>CERRAR ORDEN</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor = "let orden of ordenesActivas" >
+                                        <td>{{orden.idOrden}}</td>
+                                        <td>{{orden.vehiculo.modelo}}</td>
+                                        <td>{{orden.vehiculo.ano}}</td>
+                                        <td>{{orden.vehiculo.placa}}</td>
+                                        <td>{{orden.vehiculo.serialMotor}}</td>
+                                        <td>{{setEstado(orden.activada)}}</td>
+                                        <td>
+                                                <button type="button" class="btn bg-indigo waves-effect" (click)="cerrarOrden(orden)">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                            </td>
+                                    </tr>
+                                   
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="vista == 4"> 
+            <app-reporte-cliente [clientes]= "clientes"  [marcas] = "marcas" > </app-reporte-cliente>
+        </div>
+        <div *ngIf="vista == 5"> 
+            <app-reporte-vehiculo> </app-reporte-vehiculo>
+        </div>
+        <div *ngIf="vista == 6"> 
+            <app-reporte-mecanico [mecanicos] = "mecanicos" [vehiculos] = "vehiculos" > </app-reporte-mecanico>
+        </div>
+       <div *ngIf="vista == 7"> 
+           <app-reporte-modelo [vehiculos] = "vehiculos" > </app-reporte-modelo>
+       </div>
+    <!-- MODIFICAR USUARIOS -->
+        <div  *ngIf="vista == 8">
+          <div class="overlay"></div>
+          <div class="signup-box">
+              <div class="logo">
+                  <a href="javascript:void(0);">Mati<b>ASSEMBLER</b></a>
+                  <small>Su taller de siempre, ahora mejor que nunca</small>
+              </div>
+              <div class="card">
+                  <div class="body">
+                      <form  action="/" (submit)="modificarClienteSubmit()" id="frmFileUpload2"  method="post">
+                          <div class="msg">Modifique el usuario</div>
+                          <div class="input-group">
+                              <span class="input-group-addon">
+                                          <i class="material-icons">person</i>
+                                      </span>
+                              <div class="form-line">
+                                  <input type="text" class="form-control" [(ngModel)]="name" name="name" placeholder="Nombre" required autofocus>
+                              </div>
+                          </div>
+                          <div class="input-group">
+                              <span class="input-group-addon">
+                                          <i class="material-icons">person</i>
+                                      </span>
+                              <div class="form-line">
+                                  <input type="text" class="form-control" [(ngModel)]="lastname" name="lastname" placeholder="Apellido" required autofocus>
+                              </div>
+                          </div>
+                          <div class="input-group">
+                              <span class="input-group-addon">
+                                          <i class="material-icons">person</i>
+                                      </span>
+                              <div class="form-line">
+                                  <input type="text" class="form-control" [(ngModel)]="cedula" name="cedula" placeholder="Cédula" required autofocus>
+                              </div>
+                          </div>
+
+
+                          <div class="input-group">
+                              <span class="input-group-addon">
+                                          <i class="material-icons">email</i>
+                                      </span>
+                              <div class="form-line">
+                                  <input type="email" class="form-control" [(ngModel)]="email" name="email" placeholder="Email" required>
+                              </div>
+                          </div> 
+                          <div class="input-group">
+                              <span class="input-group-addon">
+                                          <i class="material-icons">person</i>
+                                      </span>
+                              <div class="btn-group">
+
+                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  disabled>
+                                            {{obtenerRolSubmit()}}<span class="caret"></span>
+                                        </button>
+                                  <ul class="dropdown-menu">
+                                      <li><a (click)= "setRol(1)" >Cliente</a></li>
+                                      <li><a (click)= "setRol(2)" >Administrador</a></li>
+                                      <li><a (click)= "setRol(3)">Gerente</a></li>
+                                      <li><a (click)= "setRol(4)">Mecanico</a></li>
+
+                                  </ul>
+                              </div>
+                          </div>
+                          <div class="input-group">
+                              <span class="input-group-addon">
+                                      <i class="material-icons">person</i>
+                                  </span>
+                              <div class="form-line">
+                                  <input type="text" class="form-control" [(ngModel)]="telefono" name="telefono" placeholder="telefono" required autofocus>
+                              </div>
+                          </div>
+                          <div class="input-group">
+                              <span class="input-group-addon">
+                                      <i class="material-icons">person</i>
+                                  </span>
+                              <div class="form-line">
+                                  <input type="text" class="form-control" [(ngModel)]="direccion" name="direccion" placeholder="direccion" required autofocus>
+                              </div>
+                              <button class="btn btn-block btn-lg bg-pink waves-effect"  type="submit">MODIFICAR</button>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+        </div>
+
+       <div *ngIf="vista == 9"> 
+            <div class="card">
+                <div class="header">
+                    <h2>EMITIR ORDEN DE REPARACIÓN</h2>
+                </div>
+                <div class="body">
+                    <form  action="/" id="frmFileUpload"  method="post">
+                      
+                    
+                        <div class="input-group">
+                            <my-date-picker name="mydate" [options]="myDatePickerOptions"
+                            [(ngModel)]="model" required></my-date-picker>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="material-icons">check_circle</i>
+                            </span>
+                            <div class="form-line">
+                                <input type="text" class="form-control" [(ngModel)]="motivo" name="motivo" placeholder="Motivo" >
+                            </div>
+                        </div>
+                    <div *ngIf="selecciono">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="material-icons">person</i>
+                            </span>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mecanico: {{mecanico.nombre}}<span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li *ngFor = "let mecanico of mecanicos"><a (click)= "seleccionarMecanico(mecanico)">{{mecanico.nombre}}</a></li>                                    
+                                </ul>
+                              
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="selecciono==false">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="material-icons">person</i>
+                            </span>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mecanico:<span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li *ngFor = "let mecanico of mecanicos"><a (click)= "seleccionarMecanico(mecanico)">{{mecanico.nombre}}</a></li>                                    
+                                </ul>
+                              
+                            </div>
+                        </div>
+                    </div>
+                        <div class="input-group"> 
+                            <div>
+                            <span class="input-group-addon" style="text-align: left">
+                                <i class="material-icons">settings</i>
+                                <label>Accesorios:</label>
+                            </span>            
+                            </div>          
+                            <div class="demo-checkbox"> 
+                            <div>
+                                    <input type="checkbox" id="acc1" [(ngModel)]="cauchoRepuesto" name="cauchoRepuesto" class="chk-col-light-blue"/>
+                                    <label for="acc1" >Caucho Repuesto</label>
+                            </div>    
+                            <div>
+                                    <input type="checkbox" id="acc2" [(ngModel)]="llaves" name="llaves" class="chk-col-light-blue"/>
+                                    <label for="acc2" >Llaves</label>                
+                            </div>                              
+                            <div>
+                                    <input type="checkbox" id="acc3" [(ngModel)]="gato" name="gato"  class="chk-col-light-blue"/>
+                                    <label for="acc3" >Gato</label>
+                            </div>                              
+                            <div>
+                                    <input type="checkbox" id="acc4" [(ngModel)]="herramientas" name="herramientas" class="chk-col-light-blue"/>
+                                    <label for="acc4" >Herramientas</label>
+                            </div> 
+                            <div>
+                                    <input type="checkbox" id="acc5"  [(ngModel)]="equipodeSonido" name="equipodeSonido" class="chk-col-light-blue"/>
+                                    <label for="acc5" >Equipo de Sonido</label>
+                            </div>   
+                            </div>  
+                             <div class="form-line">
+                                <input type="text" class="form-control" [(ngModel)]="desperfectoCarroceria" name="desperfectoCarroceria" placeholder="Desperfecto Carroceria (opcional)">
+                            </div>                                 
+                        </div> 
+                        <div class="input-group">
+                            <div>
+                            <span class="input-group-addon" style="text-align: left">
+                                <i class="material-icons">confirmation_number</i>
+                                <label>Elegir imagen a cargar (opcional)</label>
+                            </span>            
+                            </div>  
+                            <div class="form-line">                      
+                              <input type="file" id="fileItem"  name="file" accept=".png, .jpg, .jpeg" multiple>
+                            </div>
+                        </div> 
+
+                        <button class="btn btn-block btn-lg bg-pink waves-effect" (click) = "registrarOrden()" type="text">AÑADIR ORDEN</button>
+          
+                    </form>
+                </div>
+            </div>
+       </div>
+    <!-- #END# Hover Rows -->
+    <div *ngIf="vista == 10"> 
+        <app-leer-qr [vista]="vista"> </app-leer-qr>
+    </div>
+</div>
+<div *ngIf="vista == 500">
+    <body class="five-zero-zero">
+        <div class="five-zero-zero-container">
+            <div class="error-code">Error</div>
+            <div class="error-message">Qr inválido</div>
+            <div class="button-place">
+                <a (click)=setVista(1) class="btn btn-default btn-lg waves-effect">VOLVER </a>
+            </div>
+        </div>
+    </body> 
+</div> 
+</section>
+
+</div>
+<div *ngIf="user.rol != 3"> 
+    <body class="five-zero-zero">
+        <div class="five-zero-zero-container">
+            <div class="error-code">Error</div>
+            <div class="error-message">No tiene acceso a esta página</div>
+        </div>
+    </body> 
+
+
+</div>
